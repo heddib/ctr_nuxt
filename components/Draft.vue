@@ -227,6 +227,8 @@ export default {
   sockets: {
     RES_START_TIMER: function(ele) {
       this.timeLeft = ele;
+      if(this.timeLeft <= 10)
+        this.$playSFX('gofast')
     },
     RES_NEXT_ROUND: function(ele) {
       if (ele.idMap !== -1) {
@@ -234,16 +236,23 @@ export default {
       }
       this.$store.commit("draft/nextRound", [ele.round, ele.turn, ele.maps]);
 
-      if(ele.banOrPick == 1) {
+      // TODO : ET ICI ON MET LE TOUT PREMIER PICK GENRE
+
+      if(!(this.$store.state.draft.draft.draftMode.bans >=
+        this.$store.state.draft.draft.round)) {
         if(!this.lock) {
           this.$playMusic('pick')
         }
         this.lock = true;
       }
 
-      if(ele.banOrPick == 1) {
+      if(ele.banOrPick == 0) {
         this.$playSFX('banned')
+      } else if(ele.banOrPick == 1) {
+        this.$playSFX('picked')
       }
+
+      // TODO : METTRE LA MUSIQUE POUR SAVOIR C'EST A QUI DE PICK
 
       if(ele.turn == 0) {
 

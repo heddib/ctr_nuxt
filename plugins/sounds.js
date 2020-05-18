@@ -17,7 +17,6 @@ function _playSFX(name) {
 
 function _playMusic(name) {
   music_channel.src = require("@/assets/sounds/music/" + name + "." + music_format)
-  music_channel.loop = true
   music_channel.play()
 }
 

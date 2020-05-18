@@ -184,6 +184,10 @@
 
 <script>
 export default {
+  mounted() {
+    if(this.endGame)
+      this.$playMusic('end')
+  },
   sockets: {
     RES_START_TIMER: function(ele) {
       this.timeLeft = ele;
@@ -193,15 +197,6 @@ export default {
         this.$store.commit("map/selectMap", [ele.banOrPick, ele.idMap]);
       }
       this.$store.commit("draft/nextRound", [ele.round, ele.turn, ele.maps]);
-    }
-  },
-  watch() {
-    return {
-      endGame()  {
-        if(this.endGame == true) {
-          this.$playSFX('end')
-        }
-      }
     }
   },
   data() {
